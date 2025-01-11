@@ -87,6 +87,25 @@
 	<button on:click={() => (state = 'playing')}> Play again </button>
 {/if}
 
+{#if state === 'playing'}
+	<div class="cards">
+		{#each grid as card, cardIdx}
+			<!-- state logic using local constants  -->
+			{@const isSelected = selected.includes(cardIdx)}
+			{@const isSelectedOrMatch = selected.includes(cardIdx) || matches.includes(card)}
+			{@const match = matches.includes(card)}
+			<button
+				class="card"
+				class:selected={isSelected}
+				disabled={isSelectedOrMatch}
+				on:click={() => selectCard(cardIdx)}
+			>
+				<div class:match>{card}</div>
+			</button>
+		{/each}
+	</div>
+{/if}
+
 <style>
 	.cards {
 		display: grid;
@@ -102,6 +121,10 @@
 
 		&.selected {
 			border: 4px solid var(--border);
+		}
+		& .match {
+			transition: opacity 0.3s ease-out;
+			opacity: 0.4;
 		}
 	}
 </style>
