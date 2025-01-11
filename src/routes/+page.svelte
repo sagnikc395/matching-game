@@ -24,7 +24,7 @@
 		return shuffle([...cards, ...cards]);
 	};
 
-	const shuffle = (array: Items[]) => {
+	const shuffle = <Items,>(array: Items[]) => {
 		return array.sort(() => Math.random() - 0.5);
 	};
 
