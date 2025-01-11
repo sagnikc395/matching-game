@@ -75,6 +75,11 @@
 			</button>
 		{/each}
 	</div>
+	<div class="matches">
+		{#each matches as match}
+			<div>{match}</div>
+		{/each}
+	</div>
 {/if}
 
 {#if state === 'lost'}
@@ -126,5 +131,12 @@
 			transition: opacity 0.3s ease-out;
 			opacity: 0.4;
 		}
+	}
+
+	.matches {
+		display: flex;
+		gap: 1rem;
+		margin-block: 2rem;
+		font-size: 3rem;
 	}
 </style>
