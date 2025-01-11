@@ -8,6 +8,22 @@
 	//size of the grid
 	let size = 20;
 
+	//game timer things
+	let timerId: number | null = null;
+	let time = 60;
+
+	const startGameTimer = () => {
+		const countdown = () => {
+			state !== 'paused' && (time -= 1);
+		};
+		timerId = setInterval(countdown, 1000);
+	};
+
+	const gameLost = () => {
+		state = 'lost';
+	};
+
+	//creating grid logic
 	const createGrid = () => {
 		//unique cards
 		let cards = new Set<string>();
@@ -60,6 +76,12 @@
 
 	$: selected.length === 2 && matchCards();
 	$: maxMatches === matches.length && gameWon();
+
+	$: if (state === 'playing') {
+		//to pause the game
+		!timerId && startGameTimer();
+	}
+	$: time === 0 && gameLost();
 </script>
 
 {#if state === 'start'}
@@ -68,6 +90,9 @@
 {/if}
 
 {#if state === 'playing'}
+	<h1 class="timer" class:pulse={time <= 10}>
+		{time}
+	</h1>
 	<div class="cards">
 		{#each grid as card, cardIdx}
 			<button class="card">
@@ -138,5 +163,20 @@
 		gap: 1rem;
 		margin-block: 2rem;
 		font-size: 3rem;
+	}
+
+	.timer {
+		transition: color 0.3s ease;
+	}
+
+	.pulse {
+		color: var(--pulse);
+		animation: pulse 1s infinite ease;
+	}
+
+	@keyframes pulse {
+		to {
+			scale: 1.4;
+		}
 	}
 </style>
