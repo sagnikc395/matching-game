@@ -70,3 +70,22 @@
         Play again
     </button>
 {/if}
+
+<style>
+    .cards {
+        display: grid;
+        grid-template: repeat(5,1fr);
+        gap:0.4rem;
+    }
+
+    .card {
+        height: 140px;
+		width: 140px;
+		font-size: 4rem;
+		background-color: var(--bg-2);
+
+		&.selected {
+			border: 4px solid var(--border);
+		}
+    }
+</style>
